@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+   max-width: 100vw;
+   overflow-x: hidden;
+   margin: 0;
+   padding: 0;
+}
+
+@layer utilities {
+   .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+   }
+   .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+   }
+}
+
+.timeline[data-zoom="far"] .tier-day:not(.is-week-start) {
+   opacity: 0 !important;
+}
+.timeline[data-zoom="very-far"] .tier-day {
+   opacity: 0 !important;
+}
+.timeline[data-zoom="close"] .tier-month {
+   font-size: 1.5rem !important;
+   opacity: 0.2 !important;
+   transform: translateY(10px);
+}
+
+/* Timeline tasks zoomed out logic */
+.timeline[data-zoom="far"] .todo-block,
+.timeline[data-zoom="very-far"] .todo-block {
+   display: none !important;
+}
+
+.timeline[data-zoom="far"] .todo-wrapper,
+.timeline[data-zoom="very-far"] .todo-wrapper {
+   width: 0 !important;
+   min-width: 0 !important;
+   height: 20px !important;
+   left: calc(var(--zoom) * var(--start-hours) * 1px) !important;
+   top: calc(-12px - var(--tier, 0) * 32px) !important;
+   margin-top: 0 !important;
+}
+
+.timeline[data-zoom="far"] .todo-checkbox,
+.timeline[data-zoom="very-far"] .todo-checkbox {
+   /* Make checkbox smaller and visible when the block is gone */
+   width: 16px !important;
+   height: 16px !important;
+   min-width: 16px !important;
+   min-height: 16px !important;
+   border-width: 2px !important;
+   opacity: 1 !important;
+}
+
+.timeline[data-zoom="far"] .todo-checkbox svg,
+.timeline[data-zoom="very-far"] .todo-checkbox svg {
+   width: 13px !important;
+   height: 13px !important;
+   stroke-width: 3 !important;
+}
+
+/* ── Goal Tracker Animations ── */
+
+.progress-ring-circle {
+   transition: stroke-dashoffset 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goal-card {
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.goal-card-body {
+   transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+               opacity 0.3s ease;
+}
+
+.goal-urgency-glow-red {
+   animation: urgency-pulse-red 2s ease-in-out infinite;
+}
+
+.goal-urgency-glow-amber {
+   animation: urgency-pulse-amber 2.5s ease-in-out infinite;
+}
+
+@keyframes urgency-pulse-red {
+   0%, 100% { opacity: 1; text-shadow: 0 0 4px rgba(248, 113, 113, 0.4); }
+   50% { opacity: 0.7; text-shadow: 0 0 12px rgba(248, 113, 113, 0.8); }
+}
+
+@keyframes urgency-pulse-amber {
+   0%, 100% { opacity: 1; text-shadow: 0 0 4px rgba(251, 191, 36, 0.3); }
+   50% { opacity: 0.8; text-shadow: 0 0 8px rgba(251, 191, 36, 0.6); }
+}
+
+:root {
+   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+   line-height: 1.5;
+   font-weight: 400;
+
+   color-scheme: light dark;
+   color: rgba(255, 255, 255, 0.87);
+   background-color: #242424;
+
+   font-synthesis: none;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+   font-weight: 500;
+   color: #646cff;
+   text-decoration: inherit;
+}
+a:hover {
+   color: #535bf2;
+}
+
+body {
+   margin: 0;
+   display: flex;
+   place-items: center;
+   min-width: 320px;
+   min-height: 100vh;
+}
+
+h1 {
+   font-size: 3.2em;
+   line-height: 1.1;
+}
+
+button {
+   border-radius: 8px;
+   border: 1px solid transparent;
+   padding: 0.6em 1.2em;
+   font-size: 1em;
+   font-weight: 500;
+   font-family: inherit;
+   background-color: #1a1a1a;
+   cursor: pointer;
+   transition: border-color 0.25s;
+}
+button:hover {
+   border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+   :root {
+      color: #213547;
+      background-color: #ffffff;
+   }
+   a:hover {
+      color: #747bff;
+   }
+   button {
+      background-color: #f9f9f9;
+   }
+}
